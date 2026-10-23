@@ -1,11 +1,11 @@
-
 name: verificar-api
 
 on:
   push:
-    branches: [ "principal", "main", "master" ]
+    branches: [ "principal", "main" ]
   pull_request:
-    branches: [ "principal", "main", "master" ]
+    branches: [ "principal", "main" ]
+
 jobs:
   verificar-api:
     runs-on: ubuntu-latest
