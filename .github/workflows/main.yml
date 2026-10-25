@@ -1,29 +1,27 @@
-name: verificar-api
+name: Teste de API
 
-on:
-  push:
-    branches: [ "principal", "main" ]
-  pull_request:
-    branches: [ "principal", "main" ]
+on: [push]
 
 jobs:
   verificar-api:
+    strategy:
+      matrix:
+        python-version: ['3.10', '3.11', '3.12']
     runs-on: ubuntu-latest
-
     steps:
-      - name: Baixar codigo do repositorio
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
-      - name: Configurar Python
-        uses: actions/setup-python@v4
+      - name: Setup Python
+        uses: actions/setup-python@v5
         with:
-          python-version: '3.11'
+          python-version: ${{ matrix.python-version }}
+          cache: 'pip'
 
-      - name: Instalar dependencias
+      - name: Instalar dependências
         run: |
           python -m pip install --upgrade pip
-          pip install fastapi uvicorn pytest httpx
+          pip install fastapi[standard] pytest httpx
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
       - name: Rodar Testes
-        run: |
-          pytest
+        run: pytest test_main.py
