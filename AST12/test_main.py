@@ -12,3 +12,8 @@ def test_somar():
     response = client.get("/somar/5/3")
     assert response.status_code == 200
     assert response.json() == {"resultado": 8}
+
+def test_multiplicar():
+    response = client.get("/multiplicar/5/3")
+    assert response.status_code == 200
+    assert response.json() == {"resultado": 15}
